@@ -1,5 +1,5 @@
 {
-  "name": "execution-time-decorator",
+  "name": "execution-time-decorators",
   "version": "0.0.1",
   "author": "norbornen",
   "license": "MIT",
@@ -13,7 +13,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@types/node": "^12.7.10",
+    "@types/node": "^12.7.11",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
@@ -26,8 +26,6 @@
     "dist"
   ],
   "keywords": [
-    "translate",
-    "yandex",
     "typescript",
     "decorator",
     "timer",
