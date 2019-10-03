@@ -1,0 +1,40 @@
+{
+  "name": "execution-time-decorator",
+  "version": "0.0.1",
+  "author": "norbornen",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist",
+  "scripts": {
+    "build": "rm -rf dist && tsc --strict",
+    "prepublishOnly": "yarn build",
+    "tslint": "tslint -p tsconfig.json -c tslint.json"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.10",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/norbornen/execution-time-decorator.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "translate",
+    "yandex",
+    "typescript",
+    "decorator",
+    "timer",
+    "execution time"
+  ],
+  "bugs": {
+    "url": "https://github.com/norbornen/execution-time-decorator/issues"
+  },
+  "homepage": "https://github.com/norbornen/execution-time-decorator#readme"
+}
