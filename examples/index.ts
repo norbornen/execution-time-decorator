@@ -1,4 +1,4 @@
-import { sync_timer, async_timer } from '../src';
+import { sync_timer, async_timer, sync_hrtimer, async_hrtimer } from '../src';
 import { promisify } from 'util';
 import * as fs from 'fs';
 import * as crypto from 'crypto';
@@ -25,12 +25,12 @@ class ExampleTimers {
         return fs.promises.readFile(filepath + 'a');
     }
 
-    @sync_timer
+    @sync_hrtimer
     public static readSync(filepath: string) {
         fs.readFileSync(filepath);
     }
 
-    @async_timer
+    @async_hrtimer
     public static async readAsync(filepath: string) {
         return fs.promises.readFile(filepath);
     }

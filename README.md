@@ -12,7 +12,7 @@ const { sync_timer, async_timer } = require('execution-time-decorators');
 
 Or in ES6 and TS:
 ```typescript
-import { sync_timer, async_timer } from 'execution-time-decorators';
+import { sync_timer, async_timer, sync_hrtimer, async_hrtimer } from 'execution-time-decorators';
 ```
 
 ## Usage
@@ -29,12 +29,12 @@ class ExampleTimers {
         return fs.promises.readFile(filepath);
     }
 
-    @sync_timer
+    @sync_hrtimer
     public static readSync(filepath: string) {
         fs.readFileSync(filepath);
     }
 
-    @async_timer
+    @async_hrtimer
     public static async readAsync(filepath: string) {
         return fs.promises.readFile(filepath);
     }
@@ -47,8 +47,8 @@ class ExampleTimers {
 [timer] [ExampleTimers::readSync]: timer 0.027s
 [timer] [ExampleTimers::readAsync]: begin
 [timer] [ExampleTimers::readAsync]: timer 0.236s
-[timer] [static ExampleTimers::readSync]: begin
-[timer] [static ExampleTimers::readSync]: timer 0.033s
-[timer] [static ExampleTimers::readAsync]: begin
-[timer] [static ExampleTimers::readAsync]: timer 0.181s
+[hrtimer] [static ExampleTimers::readSync]: begin
+[hrtimer] [static ExampleTimers::readSync]: timer 28388315ns
+[hrtimer] [static ExampleTimers::readAsync]: begin
+[hrtimer] [static ExampleTimers::readAsync]: timer 177673866ns
 ```

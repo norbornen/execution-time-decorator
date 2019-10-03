@@ -18,6 +18,9 @@
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
   },
+  "engines": {
+    "node" : ">=10.7.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/norbornen/execution-time-decorator.git"
