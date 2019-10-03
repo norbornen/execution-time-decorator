@@ -43,6 +43,14 @@ class ExampleTimers {
     const filepath = `${__dirname}/example.data`;
     await fs.promises.writeFile(filepath, data);
 
+    let t0 = new Date().valueOf();
+    await promisify(fs.readFile)(filepath);
+    console.log(`read promisify(fs.readFile) ${ (new Date().valueOf() - t0) * 0.001 }`);
+    t0 = new Date().valueOf();
+    await fs.promises.readFile(filepath);
+    console.log(`read fs.promises.readFile ${ (new Date().valueOf() - t0) * 0.001 }`);
+    console.log('=====================================================');
+
     const example = new ExampleTimers();
     await t(() => example.readSync(filepath));
     await t(() => example.readSyncThrow(filepath));
