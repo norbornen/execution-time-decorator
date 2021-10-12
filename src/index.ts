@@ -11,12 +11,9 @@ export function sync_timer(
     const t0 = new Date().valueOf();
     console.log(`[timer] [${timername}]: begin`);
     try {
-      const result = originalMethod.apply(this, args);
+      return originalMethod.apply(this, args);
+    } finally {
       console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      return result;
-    } catch (err) {
-      console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      throw err;
     }
   };
   return propertyDescriptor;
@@ -35,12 +32,9 @@ export function async_timer(
     const t0 = new Date().valueOf();
     console.log(`[timer] [${timername}]: begin`);
     try {
-      const result = await originalMethod.apply(this, args);
+      return await originalMethod.apply(this, args);
+    } finally {
       console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      return result;
-    } catch (err) {
-      console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      throw err;
     }
   };
   return propertyDescriptor;
@@ -59,12 +53,9 @@ export function sync_hrtimer(
     const t0 = process.hrtime.bigint();
     console.log(`[hrtimer] [${timername}]: begin`);
     try {
-      const result = originalMethod.apply(this, args);
+      return originalMethod.apply(this, args);
+    } finally {
       console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      return result;
-    } catch (err) {
-      console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      throw err;
     }
   };
   return propertyDescriptor;
@@ -83,12 +74,9 @@ export function async_hrtimer(
     const t0 = process.hrtime.bigint();
     console.log(`[hrtimer] [${timername}]: begin`);
     try {
-      const result = await originalMethod.apply(this, args);
+      return await originalMethod.apply(this, args);
+    } finally {
       console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      return result;
-    } catch (err) {
-      console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      throw err;
     }
   };
   return propertyDescriptor;
