@@ -9,7 +9,7 @@
     "example": "ts-node examples/index.ts",
     "build": "rm -rf dist && tsc --strict",
     "prepublishOnly": "yarn build",
-    "tslint": "tslint -p tsconfig.json -c tslint.json"
+    "lint": "eslint"
   },
   "devDependencies": {
     "@types/node": "^15.12.2",
