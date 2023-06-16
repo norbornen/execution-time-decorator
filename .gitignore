@@ -1,6 +1,7 @@
 .vscode/*
-dist/*
+dist
+coverage
 examples/example.data
-node_modules/*
+node_modules
 yarn-error.log
-yarn.lock
+*.bak

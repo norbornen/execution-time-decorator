@@ -1,95 +1,103 @@
+import { Logger, PerfLogger } from './perf-logger';
+import { isPromise } from './utils';
+
+export function timer({
+  logger,
+  logArguments = false,
+  hr = false,
+}: {
+  /**
+   * @default {false}
+   */
+  logArguments?: boolean;
+  /**
+   * Your current logger if it needed
+   * @default {console}
+   */
+  logger?: Logger;
+  /**
+   * Print time as nanoseconds
+   * @default {false}
+   */
+  hr?: boolean;
+} = {}) {
+  return (
+    target: any,
+    propertyKey: string,
+    propertyDescriptor: PropertyDescriptor,
+  ): PropertyDescriptor => {
+    propertyDescriptor =
+      propertyDescriptor ||
+      Object.getOwnPropertyDescriptor(target, propertyKey);
+
+    const scopename =
+      (target instanceof Function
+        ? `static ${target.name}`
+        : target.constructor.name) + `::${propertyKey}`;
+
+    const originalMethod = propertyDescriptor.value;
+    propertyDescriptor.value = function (...args: unknown[]) {
+      const l = new PerfLogger(scopename, undefined, hr, logger);
+      if (logArguments) {
+        l.printArguments(...args);
+      }
+      try {
+        const result = originalMethod.apply(this, args);
+        if (isPromise(result)) {
+          return result.finally(() => l.end());
+        } else {
+          l.end();
+          return result;
+        }
+      } catch (err) {
+        l.end();
+        throw err;
+      }
+    };
+
+    return propertyDescriptor;
+  };
+}
+
+let legacyBehaviourTimer: ReturnType<typeof timer>;
+let legacyBehaviourHrTimer: ReturnType<typeof timer>;
+
+/** @deprecated 'Use \@timer() instread \@sync_timer' decorator */
 export function sync_timer(
   target: any,
   propertyKey: string,
-  propertyDescriptor: PropertyDescriptor
-): PropertyDescriptor {
-  propertyDescriptor = propertyDescriptor || Object.getOwnPropertyDescriptor(target, propertyKey);
-
-  const timername = (target instanceof Function ? `static ${target.name}` : target.constructor.name) + `::${propertyKey}`;
-  const originalMethod = propertyDescriptor.value;
-  propertyDescriptor.value = function (...args: any[]) {
-    const t0 = new Date().valueOf();
-    console.log(`[timer] [${timername}]: begin`);
-    try {
-      const result = originalMethod.apply(this, args);
-      console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      return result;
-    } catch (err) {
-      console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      throw err;
-    }
-  };
-  return propertyDescriptor;
+  propertyDescriptor: PropertyDescriptor,
+) {
+  legacyBehaviourTimer ||= timer();
+  return legacyBehaviourTimer(target, propertyKey, propertyDescriptor);
 }
 
+/** @deprecated 'Use \@timer() instread \@async_timer' decorator */
 export function async_timer(
   target: any,
   propertyKey: string,
-  propertyDescriptor: PropertyDescriptor
-): PropertyDescriptor {
-  propertyDescriptor = propertyDescriptor || Object.getOwnPropertyDescriptor(target, propertyKey);
-
-  const timername = (target instanceof Function ? `static ${target.name}` : target.constructor.name) + `::${propertyKey}`;
-  const originalMethod = propertyDescriptor.value;
-  propertyDescriptor.value = async function (...args: any[]) {
-    const t0 = new Date().valueOf();
-    console.log(`[timer] [${timername}]: begin`);
-    try {
-      const result = await originalMethod.apply(this, args);
-      console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      return result;
-    } catch (err) {
-      console.log(`[timer] [${timername}]: timer ${((new Date().valueOf() - t0) * 0.001).toFixed(3)}s`);
-      throw err;
-    }
-  };
-  return propertyDescriptor;
+  propertyDescriptor: PropertyDescriptor,
+) {
+  legacyBehaviourTimer ||= timer();
+  return legacyBehaviourTimer(target, propertyKey, propertyDescriptor);
 }
 
+/** @deprecated 'Use \@timer() instread \@sync_hrtimer' decorator */
 export function sync_hrtimer(
   target: any,
   propertyKey: string,
-  propertyDescriptor: PropertyDescriptor
-): PropertyDescriptor {
-  propertyDescriptor = propertyDescriptor || Object.getOwnPropertyDescriptor(target, propertyKey);
-
-  const timername = (target instanceof Function ? `static ${target.name}` : target.constructor.name) + `::${propertyKey}`;
-  const originalMethod = propertyDescriptor.value;
-  propertyDescriptor.value = function (...args: any[]) {
-    const t0 = process.hrtime.bigint();
-    console.log(`[hrtimer] [${timername}]: begin`);
-    try {
-      const result = originalMethod.apply(this, args);
-      console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      return result;
-    } catch (err) {
-      console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      throw err;
-    }
-  };
-  return propertyDescriptor;
+  propertyDescriptor: PropertyDescriptor,
+) {
+  legacyBehaviourHrTimer ||= timer({ hr: true });
+  return legacyBehaviourHrTimer(target, propertyKey, propertyDescriptor);
 }
 
+/** @deprecated 'Use \@timer() instread \@async_hrtimer' decorator */
 export function async_hrtimer(
   target: any,
   propertyKey: string,
-  propertyDescriptor: PropertyDescriptor
-): PropertyDescriptor {
-  propertyDescriptor = propertyDescriptor || Object.getOwnPropertyDescriptor(target, propertyKey);
-
-  const timername = (target instanceof Function ? `static ${target.name}` : target.constructor.name) + `::${propertyKey}`;
-  const originalMethod = propertyDescriptor.value;
-  propertyDescriptor.value = async function (...args: any[]) {
-    const t0 = process.hrtime.bigint();
-    console.log(`[hrtimer] [${timername}]: begin`);
-    try {
-      const result = await originalMethod.apply(this, args);
-      console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      return result;
-    } catch (err) {
-      console.log(`[hrtimer] [${timername}]: timer ${(process.hrtime.bigint() - t0)}ns`);
-      throw err;
-    }
-  };
-  return propertyDescriptor;
+  propertyDescriptor: PropertyDescriptor,
+) {
+  legacyBehaviourHrTimer ||= timer({ hr: true });
+  return legacyBehaviourHrTimer(target, propertyKey, propertyDescriptor);
 }

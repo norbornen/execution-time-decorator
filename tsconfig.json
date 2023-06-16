@@ -1,21 +1,27 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ESNext",
-    "sourceMap": true,
-    "declaration": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
+    "lib": [
+      "ESNext"
+    ],
+    "allowJs": true,
+    "checkJs": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "strict": true,
+    "sourceMap": true,
+    "incremental": true,
+    "removeComments": true,
+    "target": "ES2021",
     "outDir": "dist",
-    "incremental": true
+    "baseUrl": "src",
+    "types": [ "node", "jest" ],
+    "typeRoots": [ "node_modules/@types" ]
   },
-  "include": [
-    "./src/**/*"
-  ]
+  "include": [ "./src/**/*", "./examples/**/*", "./test/**/*" ],
+  "exclude": ["node_modules", "examples", "test"]
 }
