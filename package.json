@@ -27,7 +27,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc --strict",
-    "prepublishOnly": "yarn build",
+    "prepublishOnly": "npm run build",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" && tsc --noEmit",
     "test": "jest --verbose --env=node",
     "test:cov": "jest --coverage --verbose --env=node",
