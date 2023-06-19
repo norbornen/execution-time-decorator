@@ -1,6 +1,6 @@
 {
   "name": "execution-time-decorators",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "norbornen",
   "license": "MIT",
   "main": "dist/index.js",
