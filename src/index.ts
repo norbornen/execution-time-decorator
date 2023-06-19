@@ -1,6 +1,10 @@
 import { Logger, PerfLogger } from './perf-logger';
 import { isPromise } from './utils';
 
+/**
+ * @example
+ * "@timer({ logger: pino, logArguments: true, hr: false })"
+ */
 export function timer({
   logger,
   logArguments = false,

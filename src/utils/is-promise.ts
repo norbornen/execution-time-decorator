@@ -1,7 +1,5 @@
-import util from 'node:util';
-
 export function isPromise<T = unknown>(p: T | Promise<T>): p is Promise<T> {
-  if (util.types.isPromise(p)) {
+  if (p instanceof Promise) {
     return true;
   }
   if (
