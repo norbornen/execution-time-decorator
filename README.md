@@ -4,7 +4,7 @@ The `timer()` decorator starts a timer you can use to track how long an operatio
 Suitable for use in both synchronous and asynchronous methods both in Node.js and Browser apps.
 
 ![build](https://img.shields.io/github/actions/workflow/status/norbornen/execution-time-decorator/unit-test.yml) [![cov](https://norbornen.github.io/execution-time-decorator/badges/coverage.svg)](https://github.com/norbornen/execution-time-decorator/actions)
-[![codeql](https://github.com/norbornen/execution-time-decorator/actions/workflows/codeql.yml/badge.svg)](https://github.com/norbornen/execution-time-decorator/actions) ![dependencies](https://img.shields.io/badge/dependencies-0-success) [![Known Vulnerabilities](https://snyk.io/test/github/norbornen/execution-time-decorator/badge.svg)](https://snyk.io/test/github/norbornen/execution-time-decorator) ![minified](https://img.shields.io/bundlephobia/min/execution-time-decorators)
+[![codeql](https://github.com/norbornen/execution-time-decorator/actions/workflows/codeql.yml/badge.svg)](https://github.com/norbornen/execution-time-decorator/actions) ![dependencies](https://img.shields.io/badge/dependencies-0-success) [![Known Vulnerabilities](https://snyk.io/test/github/norbornen/execution-time-decorator/badge.svg)](https://snyk.io/test/github/norbornen/execution-time-decorator) [![npm](https://img.shields.io/npm/v/execution-time-decorators)](https://www.npmjs.com/package/execution-time-decorators) ![minified](https://img.shields.io/bundlephobia/min/execution-time-decorators)
 
 ## Adding to your project
 
