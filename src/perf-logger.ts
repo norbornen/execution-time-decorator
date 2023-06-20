@@ -23,15 +23,11 @@ export class PerfLogger {
     private readonly hr?: boolean,
     private readonly logger?: Logger,
   ) {
+    /* istanbul ignore next */
     if (!isInNode) {
       this.hr = false;
     }
-
-    try {
-      this.printLine('begin');
-    } catch (err) {
-      this.printError(err);
-    }
+    this.printLine('begin');
   }
 
   private get timerDiff() {
